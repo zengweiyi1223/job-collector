@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>JDIA · 岗位收集</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header><div><span class="eyebrow">JDIA</span><h1>我的岗位库</h1><p>从 BOSS 收集岗位，在自己的电脑保存和整理。</p></div><span id="connection" class="pill">尚未连接本机</span></header>
+  <main>
+    <section class="panel" aria-labelledby="pair-heading">
+      <h2 id="pair-heading">连接本机程序</h2>
+      <form id="pair-form" class="row">
+        <label class="grow">配对码<input id="token" type="password" autocomplete="off" required placeholder="从本机配对页复制"></label>
+        <button type="submit">连接</button>
+        <a id="pair-link" href="http://127.0.0.1:8688/pair" target="_blank" rel="noopener noreferrer">打开本机配对页 ↗</a>
+      </form>
+      <p class="hint">先启动配套程序，再连接。若浏览器询问访问本地网络，请按需允许；岗位数据保存在你的电脑。程序重启后重新配对。</p>
+    </section>
+    <p id="notice" role="status" aria-live="polite"></p>
+    <section class="panel" aria-labelledby="collect-heading">
+      <h2 id="collect-heading">采集 BOSS 岗位</h2>
+      <form id="collect-form" class="row">
+        <label class="grow">关键词<input id="keyword" value="数据分析师" required maxlength="80"></label>
+        <label>城市<select id="city"><option value="101280100">广州</option></select></label>
+        <label>求职类型<select id="job-type"><option value="1901">全职</option></select></label>
+        <button id="collect-button" type="submit" disabled>开始采集</button>
+        <button id="stop-button" type="button" class="secondary" disabled>停止</button>
+      </form>
+      <div id="verification-notice" hidden role="status">
+        <p>检测到来源验证提示或验证跳转，采集已暂停。请查看专用 Chrome 保留的任务页：若有验证码，由本人正常完成；若已返回正常岗位页且没有验证提示，可点击下方按钮重新检查并继续。不要刷新任务页或改变搜索条件。等待期间不自动读取；10 分钟未继续会结束本轮，也可停止。</p>
+        <button id="resume-button" type="button" disabled>检查页面并继续本轮</button>
+      </div>
+      <p class="hint">每次最多尝试 20 条新岗位详情、最多读取 3 批列表。已入库岗位跳过，旧内容不更新。数量可能少于 20；验证码暂停等待本人操作，其他访问限制仍停止。</p>
+      <div id="runs" class="runs"></div>
+    </section>
+    <section class="panel" aria-labelledby="query-heading">
+      <div class="section-top"><h2 id="query-heading">查询与关注</h2><span id="total" class="hint">0 条</span></div>
+      <form id="query-form">
+        <div class="row">
+          <label class="grow">搜索本地岗位<input id="q" placeholder="名称、公司或 JD" maxlength="100"></label>
+          <label>关注状态<select id="follow"><option value="all">全部</option><option value="unmarked">未标记</option><option value="follow">关注</option><option value="unfollow">不关注</option></select></label>
+          <button type="submit">查询 / 刷新</button>
+        </div>
+        <details class="query-options"><summary>本地筛选</summary>
+          <fieldset><legend>工作区域（可多选）</legend><label><input name="district" type="checkbox" value="天河区">天河</label><label><input name="district" type="checkbox" value="海珠区">海珠</label><label><input name="district" type="checkbox" value="番禺区">番禺</label></fieldset>
+          <div class="row">
+            <label>月薪下限 K<input id="salary-low" type="number" min="0" max="1000" step="0.5" placeholder="10"></label>
+            <label>月薪上限 K<input id="salary-high" type="number" min="0" max="1000" step="0.5" placeholder="20"></label>
+            <label>公司规模<select id="size"><option value="">不限</option><option value="500">500 人及以上</option><option value="1000">1000 人及以上</option></select></label>
+          </div>
+          <p class="hint">这些条件只筛本地已有岗位；薪资按范围有交集匹配，未知字段不会匹配对应筛选。</p>
+        </details>
+      </form>
+    </section>
+    <div id="jobs" class="jobs"><p class="empty">连接本机后，查看已保存的岗位。</p></div>
+  </main>
+  <footer>岗位详情是采集时快照。招聘现状请打开原岗位确认；“不关注”会保留记录，可按关注状态筛选。</footer>
+</body>
+</html>

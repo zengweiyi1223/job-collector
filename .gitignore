@@ -1,0 +1,12 @@
+user-data/
+runtime/
+packages/
+dist/
+settings.json
+*.db
+*.db-*
+*.sqlite*
+*.log
+__pycache__/
+*.pyc
+.env
